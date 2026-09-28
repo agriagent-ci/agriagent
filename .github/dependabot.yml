@@ -1,0 +1,34 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Configuration Dependabot
+# ═══════════════════════════════════════════════════════════
+# Dependabot vérifie automatiquement les mises à jour de
+# sécurité pour nos dépendances Python et GitHub Actions.
+
+version: 2
+updates:
+  # ── Python (pip) ─────────────────────────────────────────
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "pip"
+      include: "scope"
+
+  # ── GitHub Actions ───────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "actions"
