@@ -1,0 +1,44 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Profil : Orchestrateur
+# ═══════════════════════════════════════════════════════════
+# Rôle : coordonner les sous-agents, lire la base, déléguer
+# les écritures. NE JAMAIS écrire directement dans Supabase.
+
+model:
+  default: deepseek-flash
+  provider: deepseek
+  base_url: https://api.deepseek.com/v1
+
+agent:
+  max_turns: 150
+
+display:
+  tool_progress: all
+
+plugins:
+  enabled: []
+
+_config_version: 45
+
+# ── Toolsets restreints ────────────────────────────────────
+platform_toolsets:
+  cli:
+    - clarify
+    - delegation
+    - memory
+    - session_search
+    - skills
+    - todo
+
+# ── MCP Supabase : lecture seule en pratique ──────────────
+mcp_servers:
+  supabase:
+    url: https://mcp.supabase.com/mcp
+    auth: oauth
+    oauth:
+      timeout: 900
+
+# ── Règles de sécurité ─────────────────────────────────────
+# 1. Aucune écriture directe (INSERT/UPDATE/DELETE/DDL)
+# 2. Toute écriture passe par delegate_task
+# 3. Pas de terminal, pas de file, pas de web
