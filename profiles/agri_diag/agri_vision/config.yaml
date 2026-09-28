@@ -1,0 +1,33 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Profil : VisionAgent
+# ═══════════════════════════════════════════════════════════
+# Rôle : analyser les photos de plantes (lésions, organes).
+# Ce profil n'a PAS besoin du MCP Supabase.
+
+model:
+  default: deepseek-flash
+  provider: deepseek
+  base_url: https://api.deepseek.com/v1
+
+agent:
+  max_turns: 150
+
+display:
+  tool_progress: all
+
+plugins:
+  enabled: []
+
+_config_version: 45
+
+platform_toolsets:
+  cli:
+    - clarify
+    - file
+    - memory
+    - session_search
+    - skills
+    - todo
+    - vision
+
+# Pas de MCP Supabase : l'analyse d'image est locale.
