@@ -1,0 +1,42 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Profil : DiagAgent
+# ═══════════════════════════════════════════════════════════
+# Rôle : produire un diagnostic structuré à partir des
+# observations, de la météo et des sources agronomiques.
+
+model:
+  default: deepseek-flash
+  provider: deepseek
+  base_url: https://api.deepseek.com/v1
+
+agent:
+  max_turns: 150
+
+web:
+  backend: ddgs
+  extract_backend: tavily
+
+display:
+  tool_progress: all
+
+plugins:
+  enabled: []
+
+_config_version: 45
+
+platform_toolsets:
+  cli:
+    - clarify
+    - file
+    - memory
+    - session_search
+    - skills
+    - todo
+    - web
+
+mcp_servers:
+  supabase:
+    url: https://mcp.supabase.com/mcp
+    auth: oauth
+    oauth:
+      timeout: 900
