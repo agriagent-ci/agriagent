@@ -1,0 +1,37 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Profil : AlertAgent
+# ═══════════════════════════════════════════════════════════
+# Rôle : détecter les situations à risque et écrire les
+# alertes dans la table alertes.
+
+model:
+  default: deepseek-flash
+  provider: deepseek
+  base_url: https://api.deepseek.com/v1
+
+agent:
+  max_turns: 150
+
+display:
+  tool_progress: all
+
+plugins:
+  enabled: []
+
+_config_version: 45
+
+platform_toolsets:
+  cli:
+    - clarify
+    - file
+    - memory
+    - session_search
+    - skills
+    - todo
+
+mcp_servers:
+  supabase:
+    url: https://mcp.supabase.com/mcp
+    auth: oauth
+    oauth:
+      timeout: 900
