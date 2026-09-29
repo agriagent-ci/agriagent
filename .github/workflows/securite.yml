@@ -1,0 +1,84 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Sécurité (CI)
+# ═══════════════════════════════════════════════════════════
+# Trois contrôles, sur chaque pull request, sur main et une fois
+# par semaine :
+#   1. secrets-scan     : recherche d'identifiants (TruffleHog)
+#   2. configs-validation : structure et absence de secret en clair
+#                           dans les profiles/**/config.yaml
+#   3. sql-syntax       : syntaxe PostgreSQL des fichiers sql/*.sql
+#
+# Toutes les actions sont épinglées à un SHA complet (exigé par
+# « sha_pinning_required ») ; Dependabot les met à jour.
+
+name: Sécurité
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Tous les lundis à 06:00 UTC.
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: securite-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets-scan:
+    name: secrets-scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: TruffleHog — identifiants et secrets
+        uses: trufflesecurity/trufflehog@4dd8831c5f12599465d4d45c3c447b4018a34c85 # v3.97.9
+        with:
+          path: ./
+          extra_args: --results=verified,unknown
+
+  configs-validation:
+    name: configs-validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Installer Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Installer PyYAML
+        run: python -m pip install --disable-pip-version-check "PyYAML>=6,<7"
+      - name: Valider les profils Hermes
+        run: python scripts/validate_profiles.py
+
+  sql-syntax:
+    name: sql-syntax
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Installer Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+      - name: Installer sqlfluff
+        run: python -m pip install --disable-pip-version-check "sqlfluff>=3,<4"
+      - name: Vérifier la syntaxe SQL (PostgreSQL)
+        run: |
+          for fichier in sql/*.sql; do
+            echo "── $fichier"
+            sqlfluff parse --dialect postgres --templater raw "$fichier" > /dev/null
+          done
+          echo "Syntaxe SQL valide."

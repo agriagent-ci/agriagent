@@ -5,12 +5,9 @@
 # de vulnérabilité et les mises à jour de sécurité sont activées au
 # niveau du dépôt et ne dépendent pas de lui.
 #
-# Écosystème "github-actions" volontairement retiré : il échouait à
-# chaque exécution ("/action.yml or /.github/workflows/<anything>.yml
-# not found") car le dépôt ne contient aucun workflow.
-# À réintroduire en même temps que le premier workflow.
-#
 # Écosystème "pip" : lit requirements.txt à la racine du dépôt.
+# Écosystème "github-actions" : lit .github/workflows/securite.yml ;
+# il met à jour les actions épinglées à un SHA complet.
 
 version: 2
 updates:
@@ -26,4 +23,18 @@ updates:
       - "python"
     commit-message:
       prefix: "pip"
+      include: "scope"
+
+  # ── GitHub Actions ───────────────────────────────────────
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "actions"
       include: "scope"

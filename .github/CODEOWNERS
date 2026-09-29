@@ -1,0 +1,17 @@
+# ═══════════════════════════════════════════════════════════
+# AGRIAGENT — Propriétaires du code (revue automatique)
+# ═══════════════════════════════════════════════════════════
+# Sert à demander automatiquement une revue. La revue obligatoire
+# par un propriétaire n'est PAS activée dans la protection de
+# branche : sur un dépôt tenu par une seule personne, GitHub
+# interdit d'approuver sa propre pull request, ce qui bloquerait
+# toute fusion.
+
+* @Predictorjet
+
+# Les profils Hermes, la CI et la politique de sécurité sont
+# particulièrement sensibles.
+/profiles/     @Predictorjet
+/sql/          @Predictorjet
+/.github/      @Predictorjet
+/SECURITY.md   @Predictorjet
