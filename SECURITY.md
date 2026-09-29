@@ -52,8 +52,8 @@ Utilisez plutôt :
 | Dependabot security updates | ✅ Activé |
 | Private vulnerability reporting | ✅ Activé |
 | Protection de la branche `main` | ✅ Activée : pull request obligatoire, force-push et suppression de branche interdits, résolution des conversations requise |
-| Permissions GitHub Actions par défaut | ✅ Restreintes en lecture (`read`), approbation de PR par Actions désactivée |
-| Code scanning (CodeQL) | ⚠️ Non applicable : le dépôt ne contient aucun langage analysable par CodeQL (uniquement YAML, SQL et Markdown). À activer dès que du code applicatif est ajouté. |
+| Permissions GitHub Actions par défaut | ✅ Restreintes en lecture (`read`), approbation de PR par Actions désactivée. La restriction des actions autorisées n'est pas modifiable ici : la politique est gérée au niveau de l'organisation. |
+| Code scanning (CodeQL) | ✅ Actif — langue détectée : `python` (et `actions`), scan hebdomadaire, 0 alerte |
 | Secret scanning — patterns hors fournisseurs et validity checks | ❌ Refusé par le plan Free de l'organisation : nécessite GitHub Secret Protection (Team/Enterprise) |
 
 Les alertes Dependabot et les mises à jour de sécurité ne dépendent pas de
