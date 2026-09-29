@@ -82,3 +82,13 @@ jobs:
             sqlfluff parse --dialect postgres --templater raw "$fichier" > /dev/null
           done
           echo "Syntaxe SQL valide."
+
+  actions-pinning:
+    name: actions-pinning
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Vérifier que chaque action est épinglée à un SHA complet
+        run: bash scripts/verifier_epinglage.sh

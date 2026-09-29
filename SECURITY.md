@@ -70,9 +70,13 @@ pour fusionner dans `main` :
 | `secrets-scan` | recherche d'identifiants dans le code et l'historique (TruffleHog) |
 | `configs-validation` | structure des `profiles/**/config.yaml` et absence de secret en clair (`scripts/validate_profiles.py`) |
 | `sql-syntax` | syntaxe PostgreSQL des fichiers `sql/*.sql` (sqlfluff) |
+| `actions-pinning` | épinglage de chaque action de workflow à un SHA complet (`scripts/verifier_epinglage.sh`) |
 
-Les actions tierces utilisées sont épinglées à un SHA complet
-(`sha_pinning_required`), que Dependabot met à jour chaque semaine.
+Les actions tierces utilisées sont épinglées à un SHA complet, que Dependabot
+met à jour chaque semaine. Le réglage de dépôt `sha_pinning_required` de GitHub
+est refusé ici (la politique Actions est gérée au niveau de l'organisation) :
+le contrôle `actions-pinning` remplit ce rôle et bloque toute pull request qui
+introduirait un tag ou une branche à la place d'un SHA.
 
 ## Contact
 
