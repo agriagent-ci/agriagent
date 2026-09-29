@@ -42,12 +42,22 @@ Utilisez plutôt :
 
 ## Outils de sécurité activés
 
-- ✅ Dependabot alerts
-- ✅ Dependabot security updates
-- ✅ Code scanning (CodeQL)
-- ✅ Secret scanning
-- ✅ Push protection
-- ✅ Private vulnerability reporting
+État vérifié par API le 2026-09-29 :
+
+| Module | État |
+|---|---|
+| Secret scanning | ✅ Activé |
+| Secret scanning — push protection | ✅ Activé |
+| Dependabot alerts | ✅ Activé |
+| Dependabot security updates | ✅ Activé |
+| Private vulnerability reporting | ✅ Activé |
+| Protection de la branche `main` | ✅ Activée : pull request obligatoire, force-push et suppression de branche interdits, résolution des conversations requise |
+| Permissions GitHub Actions par défaut | ✅ Restreintes en lecture (`read`), approbation de PR par Actions désactivée |
+| Code scanning (CodeQL) | ⚠️ Non applicable : le dépôt ne contient aucun langage analysable par CodeQL (uniquement YAML, SQL et Markdown). À activer dès que du code applicatif est ajouté. |
+| Secret scanning — patterns hors fournisseurs et validity checks | ❌ Refusé par le plan Free de l'organisation : nécessite GitHub Secret Protection (Team/Enterprise) |
+
+Les alertes Dependabot et les mises à jour de sécurité ne dépendent pas de
+`.github/dependabot.yml` : ce fichier ne pilote que les mises à jour de version.
 
 ## Contact
 

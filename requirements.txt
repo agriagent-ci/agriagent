@@ -1,0 +1,10 @@
+# AGRIAGENT — dépendances Python
+#
+# Fichier volontairement vide pour l'instant : le dépôt ne contient
+# pas encore de code Python. Il sert de manifeste à Dependabot
+# (écosystème "pip" déclaré dans .github/dependabot.yml), qui
+# échouait sans lui : "No files found in /".
+#
+# Ajoutez les dépendances ici au fur et à mesure, par exemple :
+#   supabase==2.9.1
+#   requests==2.32.3
