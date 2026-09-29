@@ -59,6 +59,21 @@ Utilisez plutôt :
 Les alertes Dependabot et les mises à jour de sécurité ne dépendent pas de
 `.github/dependabot.yml` : ce fichier ne pilote que les mises à jour de version.
 
+## Intégration continue
+
+Le workflow `.github/workflows/securite.yml` s'exécute sur chaque pull request,
+sur `main` et une fois par semaine. Ses trois contrôles sont des statuts requis
+pour fusionner dans `main` :
+
+| Contrôle | Objet |
+|---|---|
+| `secrets-scan` | recherche d'identifiants dans le code et l'historique (TruffleHog) |
+| `configs-validation` | structure des `profiles/**/config.yaml` et absence de secret en clair (`scripts/validate_profiles.py`) |
+| `sql-syntax` | syntaxe PostgreSQL des fichiers `sql/*.sql` (sqlfluff) |
+
+Les actions tierces utilisées sont épinglées à un SHA complet
+(`sha_pinning_required`), que Dependabot met à jour chaque semaine.
+
 ## Contact
 
 Attowla Charles Fanuel Kouamé
