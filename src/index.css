@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+input, textarea, select {
+  font-size: 16px;
+}
+
+@layer base {
+  :root {
+    --background: 60 20% 99%;
+    --foreground: 20 14% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14% 11%;
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 152 76% 93%;
+    --primary-dark: 162 88% 26%;
+    --secondary: 24 87% 42%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 60 9% 95%;
+    --muted-foreground: 20 6% 45%;
+    --accent: 35 93% 52%;
+    --accent-foreground: 0 0% 100%;
+    --accent-dark: 28 92% 45%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+    --warning: 32 95% 44%;
+    --warning-foreground: 0 0% 100%;
+    --info: 190 90% 38%;
+    --info-foreground: 0 0% 100%;
+    --border: 60 9% 89%;
+    --input: 60 9% 89%;
+    --ring: 160 84% 39%;
+    --chart-1: 160 84% 39%;
+    --chart-2: 24 87% 50%;
+    --chart-3: 0 72% 51%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 217 91% 60%;
+    --radius: 0.75rem;
+  }
+  .dark {
+    --background: 20 14% 7%;
+    --foreground: 60 10% 96%;
+    --card: 20 14% 10%;
+    --card-foreground: 60 10% 96%;
+    --popover: 20 14% 10%;
+    --popover-foreground: 60 10% 96%;
+    --primary: 160 84% 42%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 152 40% 20%;
+    --primary-dark: 162 88% 30%;
+    --secondary: 24 70% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 20 10% 16%;
+    --muted-foreground: 60 6% 62%;
+    --accent: 35 90% 50%;
+    --accent-foreground: 0 0% 100%;
+    --accent-dark: 28 88% 48%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 160 84% 42%;
+    --success-foreground: 0 0% 100%;
+    --warning: 32 90% 48%;
+    --warning-foreground: 0 0% 100%;
+    --info: 190 85% 45%;
+    --info-foreground: 0 0% 100%;
+    --border: 20 10% 20%;
+    --input: 20 10% 20%;
+    --ring: 160 84% 42%;
+    --chart-1: 160 84% 45%;
+    --chart-2: 24 80% 55%;
+    --chart-3: 0 72% 50%;
+    --chart-4: 38 92% 55%;
+    --chart-5: 217 91% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--muted)) 0%,
+      hsl(var(--muted) / 0.5) 50%,
+      hsl(var(--muted)) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s linear infinite;
+  }
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .dark .glass {
+    background: rgba(28, 25, 23, 0.7);
+  }
+  .leaf-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.04'%3E%3Cpath d='M40 10 C 55 10, 65 22, 65 40 C 65 55, 55 70, 40 70 C 25 70, 15 55, 15 40 C 15 22, 25 10, 40 10 Z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  .animate-pulse-ring {
+    animation: pulse-ring 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+body {
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+main [data-card] {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 180px;
+}
