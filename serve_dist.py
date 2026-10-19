@@ -29,9 +29,15 @@ ENTETES_A_IGNORER = {"host", "connection", "content-length", "transfer-encoding"
 
 
 def est_api(chemin: str, methode: str = "POST") -> bool:
-    """Le chat est en POST (/chat, /chat/stream) ; /api/* est réservé au backend.
-    Un GET sur /chat doit servir l'application (lien direct à partager), pas l'API."""
+    """Le chat est en POST (/chat, /chat/stream) ; /api/* et /meteo/* sont réservés au backend.
+    Un GET sur /chat ou /meteo doit servir l'application (lien direct à partager), pas l'API.
+
+    /meteo/* manquait : le navigateur recevait index.html (repli SPA) au lieu du JSON des
+    prévisions, et l'onglet Météo restait vide dans le frontend publié sur Lovable.
+    """
     if chemin.startswith("/api"):
+        return True
+    if chemin == "/meteo" or chemin.startswith("/meteo/"):
         return True
     if methode == "POST":
         return chemin == "/chat" or chemin.startswith("/chat/")
