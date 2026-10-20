@@ -9,6 +9,7 @@
  */
 import { fr } from './meteo-conseil';
 import type { Ton } from './meteo-conseil';
+import { supabase } from './supabase';
 
 export interface PrevisionJour {
   jour: string;
@@ -219,9 +220,14 @@ export async function chargerPrevisions(
   baseApi = BASE_API,
   signal?: AbortSignal
 ): Promise<PrevisionsMeteo> {
+  // L'API exige un jeton Supabase valide : sans lui, réponse 401.
+  const { data: { session } } = await supabase.auth.getSession();
   const reponse = await fetch(
     `${baseApi}/meteo/previsions?parcelle_id=${encodeURIComponent(parcelleId)}&jours=${jours}`,
-    { signal }
+    {
+      signal,
+      headers: session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : undefined,
+    }
   );
   if (!reponse.ok) {
     throw new Error(`Météo indisponible (HTTP ${reponse.status}).`);
