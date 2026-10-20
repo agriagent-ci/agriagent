@@ -5,6 +5,8 @@
  * Cloudflare comme en HTTP direct, ça évite le contenu mixte et le CORS.
  */
 
+import { supabase } from './supabase';
+
 // `?.` est indispensable : hors Vite (tests Node, tsx), `import.meta.env` n'existe pas.
 const BASE_API = (import.meta.env?.VITE_API_BASE_URL as string | undefined) ?? '/api';
 
@@ -137,9 +139,14 @@ export async function envoyerMessage({
   signal,
   baseApi,
 }: ParametresMessage): Promise<MetadonneesChat> {
+  // L'API exige un jeton Supabase valide : sans lui, réponse 401.
+  const { data: { session } } = await supabase.auth.getSession();
   const reponse = await fetch(`${baseApi ?? BASE_API}/chat/stream`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+    },
     body: JSON.stringify({
       message,
       historique: historique ?? [],

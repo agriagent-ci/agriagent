@@ -58,6 +58,18 @@ class SPAHandler(SimpleHTTPRequestHandler):
         return super().send_head()
 
     def end_headers(self):
+        # En-têtes de sécurité : Lovable ne permet pas de les régler, ce serveur si.
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "DENY")
+        self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        self.send_header("Permissions-Policy", "geolocation=(self), camera=(self), microphone=()")
+        self.send_header("Content-Security-Policy", (
+            "default-src 'self'; script-src 'self'; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' data: https://fonts.gstatic.com; "
+            "img-src 'self' data: blob: https:; connect-src 'self' https:; "
+            "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+        ))
         if self.path.startswith("/assets/"):
             self.send_header("Cache-Control", "public, max-age=31536000, immutable")
         super().end_headers()
