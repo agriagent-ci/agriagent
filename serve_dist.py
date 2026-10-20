@@ -19,7 +19,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 ROOT = "/home/hermes/agriagent-frontend/dist"
 PORT = 8080
-HOST = "0.0.0.0"
+HOST = "127.0.0.1"  # le tunnel passe par localhost : inutile d'écouter sur Internet
 
 API_HOTE = "127.0.0.1"
 API_PORT = 8000
